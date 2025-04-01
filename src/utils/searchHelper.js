@@ -65,7 +65,7 @@ export function newSearch(filters) {
     query.filter.args.push(upperBounds)
   }
 
-  console.log(JSON.stringify(query))
+  console.log(query)
 
   SearchService(query)
 

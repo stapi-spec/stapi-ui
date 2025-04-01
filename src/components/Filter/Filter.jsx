@@ -126,7 +126,6 @@ const Filter = () => {
         )
         continue
       }
-console.log(constraint)
       if (constraint.type === 'string') {
         filterContainer.push(
           <FormControl key={constraintName}>

@@ -1,0 +1,229 @@
+.Search {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.searchFilters {
+  height: calc(100% - 60px);
+  margin-top: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.searchButtonContainer {
+  height: 60px;
+  border-top: solid #4f5768 2px;
+  display: flex;
+  align-items: end;
+  margin-bottom: 15px;
+}
+
+.searchContainer {
+  color: #ffffff;
+  font-size: 16px;
+  margin-right: 5px;
+  margin-bottom: 15px;
+}
+
+.searchContainer label {
+  font-weight: bold;
+  color: #fff;
+}
+
+.searchContainer.datePickerComponent label {
+  position: relative;
+  top: 2px;
+}
+
+.viewSelectorComponent {
+  width: 100%;
+}
+
+.searchContainer.searchButton {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.searchContainer.searchButton .linkButton {
+  height: 45px;
+}
+
+.searchFilterContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchByGeomOptionsButtons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.searchByGeomOptionsButton {
+  height: 32px;
+  max-width: 100px;
+  margin-right: 10px;
+  background-color: #4f5768;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #a9b0c1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+.searchByGeomOptionsButton:hover {
+  background-color: #353d4f;
+}
+
+.searchByGeomOptionsButtonDisabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.searchByGeomOptionsButtonDisabled:hover {
+  background-color: #4f5768;
+}
+
+.searchByGeomOptions {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #a9b0c1;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Date Range Picker */
+
+.datePickerComponent {
+  z-index: 4;
+  font-size: 16px;
+  position: relative;
+  min-height: 50px;
+  margin-top: 15px;
+}
+
+.datePickerComponent label a svg {
+  height: 16px;
+  width: 16px;
+  position: relative;
+  top: 1px;
+  left: 4px;
+  margin-right: 10px;
+}
+
+.datePickerComponent .react-tooltip {
+  font-weight: normal;
+  line-height: 1.6;
+}
+
+/* Cloud Slider */
+
+.searchContainer.cloudSlider {
+  margin-bottom: 5px;
+}
+
+.searchContainer .MuiGrid-container {
+  position: relative;
+  top: 4px;
+}
+
+input[class$='-MuiInputBase-root-MuiInput-root']::before {
+  border-bottom-color: #76829c !important;
+}
+
+input[class$='-MuiInputBase-input-MuiInput-input'] {
+  text-align: center;
+  font-family: 'Inter', Arial, Helvetica, sans-serif !important;
+  color: white !important;
+}
+
+/* Leaflet Search Icon Overrides */
+
+.leaflet-control-geosearch a.leaflet-bar-part:before {
+  top: 17px !important;
+  left: 15px !important;
+  width: 7px !important;
+}
+
+.leaflet-control-geosearch a.leaflet-bar-part:after {
+  height: 10px !important;
+  width: 10px !important;
+}
+
+.leaflet-control-geosearch.leaflet-geosearch-bar {
+  margin-left: 50px;
+  max-width: 30%;
+}
+
+@media screen and (max-width: 975px) {
+  .leaflet-control-geosearch.leaflet-geosearch-bar {
+    max-width: 80%;
+  }
+}
+
+/* Hover layer labels for grid cell search results */
+
+.tooltip_style {
+  font-weight: 600;
+  background-color: #6cc24a;
+  border: 0 none;
+  text-align: center;
+  line-height: 15px;
+  font-size: 1.25em;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tooltip_style:before {
+  border-top-color: #6cc24a;
+}
+
+.tooltip_style:after {
+  border-bottom-color: #6cc24a;
+}
+
+.tooltip_style span {
+  font-size: 0.675em;
+  letter-spacing: 0.05em;
+}
+
+/* Layer styles for geo hex search results */
+
+.label_style {
+  font-weight: 400;
+  border: 0 none;
+  text-align: center;
+  line-height: 15px;
+  font-size: 1.25em;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.label_style span {
+  font-size: 0.675em;
+  letter-spacing: 0.05em;
+}
+
+svg path.leaflet-interactive {
+  transition: fill-opacity 0.33s ease-in-out;
+}

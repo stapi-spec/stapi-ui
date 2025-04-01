@@ -1,0 +1,97 @@
+.PageHeader {
+  width: 100%;
+  height: 64px;
+  background-color: #12171a;
+  color: #a9b0c1;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  position: absolute;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.pageHeaderRightButtons {
+  display: flex;
+  flex-direction: row;
+}
+
+.pageHeaderLeft {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.dashboardLink {
+  margin-right: 10px;
+  font-size: 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageHeaderRight {
+  align-items: center;
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 10px;
+}
+
+.headerLogoImage {
+  width: 50px;
+  height: 50px;
+}
+
+.filmDrop {
+  padding: 6px;
+  min-width: 90px;
+}
+
+.pageHeaderLink {
+  margin-left: 0px;
+  margin-right: 10px;
+  border: 1px #76829c solid;
+  padding: 5px 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  background: transparent;
+  transition: all 0.33s ease-in-out;
+}
+
+.OpenIcon {
+  padding-left: 10px;
+  height: 100%;
+  transition: all 0.33s ease-in-out;
+}
+
+.pageHeaderLink:hover {
+  cursor: pointer;
+  border: 1px #6cc24a solid;
+  background: #6cc24a;
+  color: #12171a;
+}
+
+.cartButtonHeaderBar {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 950px) {
+  .buttonLink {
+    display: none;
+  }
+}

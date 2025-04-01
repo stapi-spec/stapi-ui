@@ -1,35 +1,24 @@
-.coverage
-htmlcov
-dist
-.direnv
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+/public/config/config*.json
+/public/config/*.png
+/public/config/*.ico
+!/public/config/config.example.json
 
 # dependencies
-node_modules
+/node_modules
+/.pnp
+.pnp.js
 
-# JS
-.next
-out
-npm-debug.log
+# testing
+/coverage
+
+# production
+/build
 
 # misc
 .DS_Store
 
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# vercel
-.vercel
-
-# vscode
-pyrightconfig.json
-sat-tasking-sprint.code-workspace
-.vscode/
-
-# python
-.python-version
-.venv
-__pycache__
-.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

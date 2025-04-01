@@ -1,0 +1,77 @@
+.popupResult {
+  display: flex;
+  flex-direction: column;
+}
+
+.popupResultThumbnailContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  min-height: 230px;
+}
+
+.popupResultThumbnail {
+  width: 225px;
+}
+
+.popupResultDetails {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detailRow {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+.popupResultDetailsRowKey {
+  font-weight: bold;
+  color: #fff;
+}
+
+.popupResultDetailsRowValue {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.popupResultDetailsHrefLink {
+  color: #d3d3d3;
+  text-decoration: underline;
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.popupResultDetailsHrefLink:hover {
+  color: #fff;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #dedede;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
