@@ -1,6 +1,5 @@
 import React from 'react'
 import './PageHeader.css'
-import { Box } from '@mui/material'
 import DrawTools from '../../DrawTools/DrawTools'
 import Logo from '../../../assets/taskingSprintLogo.svg'
 import DateTimeRangeSelector from '../../DateTimeRangeSelector/DateTimeRangeSelector'
@@ -21,7 +20,7 @@ const PageHeader = () => {
           className="headerLogoImage"
         />
 
-        <h3>Berlin Tasking Sprint 2024</h3>
+        <h3>Portugal Tasking Sprint 2025</h3>
 
       </div>
       <div className="pageHeaderRight">

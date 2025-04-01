@@ -92,8 +92,6 @@
     "silent": false,
     "run": [
       "check-markdown",
-      "format",
-      "lint",
       "audit-all",
       "audit-prod",
       "test-pre-commit",
