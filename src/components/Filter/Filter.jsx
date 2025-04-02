@@ -77,159 +77,153 @@ const Filter = () => {
   })
 
   const filterContainer = []
-  console.log(_selectedProductData)
 
-  if (_selectedProductData?.queryables?.properties) {
-    for (const constraintName of Object.keys(
-      _selectedProductData.queryables.properties
-    )) {
-      const constraint =
-        _selectedProductData.queryables.properties[constraintName]
+  if (_selectedProductData?.queryables?.properties == null) return null
+  for (const constraintName of Object.keys( _selectedProductData.queryables.properties)) {
+    const constraint = _selectedProductData.queryables.properties[constraintName]
+    if (constraint.type === 'integer') {
+      filterContainer.push(
+        <FormControl key={constraintName} sx={{ marginTop: 4 }}>
+          <InputLabel
+            htmlFor={constraintName}
+            sx={{ color: '#FFF', paddingTop: 2 }}
+          >
+            {constraint.title}
+          </InputLabel>
+          <Slider
+            id={constraintName}
+            name={constraintName}
+            valueLabelDisplay="on"
+            min={constraint.minimum}
+            max={constraint.maximum}
+            value={_selectedProductFilters[constraintName] || 0}
+            onChange={(event, newValue) => {
+              store.dispatch(
+                setSelectedProductFilters({
+                  ..._selectedProductFilters,
+                  [constraintName]: newValue
+                })
+              )
+            }}
+          />
+          <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
+            {constraint.description}
+          </FormHelperText>
+        </FormControl>
+      )
+      continue
+    }
+
+    if (constraint.type === 'number') {
+      filterContainer.push(
+        <FormControl key={constraintName} sx={{ marginTop: 4 }}>
+          <InputLabel
+            htmlFor={constraintName}
+            sx={{ color: '#FFF', paddingTop: 2 }}
+          >
+            {constraint.title}
+          </InputLabel>
+          <Slider
+            id={constraintName}
+            name={constraintName}
+            valueLabelDisplay="on"
+            min={constraint.minimum}
+            max={constraint.maximum}
+            value={_selectedProductFilters[constraintName] || [0, 0]} // TODO: this should be managed by redux, but it's not working right now :) (the other controls should also be added on redux)
+            onChange={(event, newValue) => {
+              store.dispatch(
+                setSelectedProductFilters({
+                  ..._selectedProductFilters,
+                  [constraintName]: newValue
+                })
+              )
+            }}
+          />
+          <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
+            {constraint.description}
+          </FormHelperText>
+        </FormControl>
+      )
+      continue
+    }
+    if (constraint.type === 'string') {
+      filterContainer.push(
+        <FormControl key={constraintName}>
+          <InputLabel
+            htmlFor={constraintName}
+            sx={{ color: '#FFF', paddingTop: 0 }}
+          >
+            {constraint.title}
+          </InputLabel>
+          <Input
+            id={constraintName}
+            name={constraintName}
+            aria-describedby={constraintName}
+          />
+          <FormHelperText>{constraint.description}</FormHelperText>
+        </FormControl>
+      )
+      continue
+    }
+
+    if (constraint.type === 'boolean') {
       console.log(constraint)
-      if (constraint.type === 'integer') {
-        filterContainer.push(
-          <FormControl key={constraintName} sx={{ marginTop: 4 }}>
-            <InputLabel
-              htmlFor={constraintName}
-              sx={{ color: '#FFF', paddingTop: 2 }}
-            >
-              {constraint.title}
-            </InputLabel>
-            <Slider
-              id={constraintName}
-              name={constraintName}
-              valueLabelDisplay="on"
-              min={constraint.minimum}
-              max={constraint.maximum}
-              value={_selectedProductFilters[constraintName] || 0}
-              onChange={(event, newValue) => {
-                store.dispatch(
-                  setSelectedProductFilters({
-                    ..._selectedProductFilters,
-                    [constraintName]: newValue
-                  })
-                )
-              }}
-            />
-            <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
-              {constraint.description}
-            </FormHelperText>
-          </FormControl>
-        )
-        continue
+      filterContainer.push(
+        <FormControl key={constraintName}>
+          <InputLabel
+            htmlFor={constraintName}
+            sx={{ color: '#FFF', paddingTop: 0 }}
+          >
+            {constraint.title}
+          </InputLabel>
+          <Switch
+            id={constraintName}
+            name={constraintName}
+            aria-describedby={constraintName}
+          />
+          <FormHelperText>{constraint.description}</FormHelperText>
+        </FormControl>
+      )
+      continue
+    }
+
+    if (constraint.type === 'array') {
+      // TODO for umbras case we need to add a check for the $ref property, if it exists we need to get the enum values from the $ref object
+      // and populate the dropdown with those values
+      // otherwise just take the enum values from the parameter properties
+      // its not working for the last umbra json but maybe after the changes it will?
+
+      let refItem = {}
+      if (constraint.items.$ref) {
+        const refName = constraint.items.$ref.split('/').pop()
+        refItem = _selectedProductData.parameters.$defs[refName]
       }
 
-      if (constraint.type === 'number') {
-        filterContainer.push(
-          <FormControl key={constraintName} sx={{ marginTop: 4 }}>
-            <InputLabel
-              htmlFor={constraintName}
-              sx={{ color: '#FFF', paddingTop: 2 }}
-            >
-              {constraint.title}
-            </InputLabel>
-            <Slider
-              id={constraintName}
-              name={constraintName}
-              valueLabelDisplay="on"
-              min={constraint.minimum}
-              max={constraint.maximum}
-              value={_selectedProductFilters[constraintName] || [0, 0]} // TODO: this should be managed by redux, but it's not working right now :) (the other controls should also be added on redux)
-              onChange={(event, newValue) => {
-                store.dispatch(
-                  setSelectedProductFilters({
-                    ..._selectedProductFilters,
-                    [constraintName]: newValue
-                  })
-                )
-              }}
-            />
-            <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
-              {constraint.description}
-            </FormHelperText>
-          </FormControl>
+      const options = []
+
+      for (const option of refItem?.enum || []) {
+        options.push(
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
         )
-        continue
-      }
-      if (constraint.type === 'string') {
-        filterContainer.push(
-          <FormControl key={constraintName}>
-            <InputLabel
-              htmlFor={constraintName}
-              sx={{ color: '#FFF', paddingTop: 0 }}
-            >
-              {constraint.title}
-            </InputLabel>
-            <Input
-              id={constraintName}
-              name={constraintName}
-              aria-describedby={constraintName}
-            />
-            <FormHelperText>{constraint.description}</FormHelperText>
-          </FormControl>
-        )
-        continue
       }
 
-      if (constraint.type === 'boolean') {
-        console.log(constraint)
-        filterContainer.push(
-          <FormControl key={constraintName}>
-            <InputLabel
-              htmlFor={constraintName}
-              sx={{ color: '#FFF', paddingTop: 0 }}
-            >
-              {constraint.title}
-            </InputLabel>
-            <Switch
-              id={constraintName}
-              name={constraintName}
-              aria-describedby={constraintName}
-            />
-            <FormHelperText>{constraint.description}</FormHelperText>
-          </FormControl>
-        )
-        continue
-      }
-
-      if (constraint.type === 'array') {
-        // TODO for umbras case we need to add a check for the $ref property, if it exists we need to get the enum values from the $ref object
-        // and populate the dropdown with those values
-        // otherwise just take the enum values from the parameter properties
-        // its not working for the last umbra json but maybe after the changes it will?
-
-        let refItem = {}
-        if (constraint.items.$ref) {
-          const refName = constraint.items.$ref.split('/').pop()
-          refItem = _selectedProductData.parameters.$defs[refName]
-        }
-
-        const options = []
-
-        for (const option of refItem?.enum || []) {
-          options.push(
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          )
-        }
-
-        filterContainer.push(
-          <FormControl key={constraintName}>
-            <InputLabel
-              htmlFor={constraintName}
-              sx={{ color: '#FFF', paddingTop: 0 }}
-            >
-              {constraint.title}
-            </InputLabel>
-            <Select id={constraintName} name={constraintName}>
-              {options}
-            </Select>
-            <FormHelperText>{constraint.description}</FormHelperText>
-          </FormControl>
-        )
-        continue
-      }
+      filterContainer.push(
+        <FormControl key={constraintName}>
+          <InputLabel
+            htmlFor={constraintName}
+            sx={{ color: '#FFF', paddingTop: 0 }}
+          >
+            {constraint.title}
+          </InputLabel>
+          <Select id={constraintName} name={constraintName}>
+            {options}
+          </Select>
+          <FormHelperText>{constraint.description}</FormHelperText>
+        </FormControl>
+      )
+      continue
     }
   }
 
