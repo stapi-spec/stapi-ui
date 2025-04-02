@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from 'react'
 import './ProductsDropdown.css'
 import Box from '@mui/material/Box'
-import NativeSelect from '@mui/material/NativeSelect'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedProductData
 } from '../../redux/slices/mainSlice'
 import { GetProductsService } from '../../services/get-products-service'
+import { Select, MenuItem, InputLabel } from '@mui/material'
 
 const Dropdown = () => {
     const _apiKey = useSelector((state) => state.mainSlice.apiKey)
@@ -18,8 +18,6 @@ const Dropdown = () => {
     if (_selectedProvider && _selectedProvider){
           console.log(_selectedProvider, _apiKey)
           GetProductsService(_selectedProvider, _apiKey)
-
-
     }
   }, [_selectedProvider, _apiKey])
     
@@ -56,24 +54,27 @@ const Dropdown = () => {
   }
 
   return (
-    <Box sx={{display: 'flex', flexDirection:'column'}}>
-      <label htmlFor="productsDropdown">Products</label>
-          <NativeSelect
-            id="productsDropdown"
-            value={selectedProductID}
-            label="Products"
-            onChange={(e) => onCollectionChanged(e)}
-          >
-            <option value="selectOne" disabled={true}>
-              Select Product
-            </option>
-            {_productsData &&
-              _productsData.map(({ id, title, providers }) => (
-                <option key={id} value={id}>
-                  {title} - {Array.isArray(providers) ? providers[0]?.name : providers.name.toUpperCase()}
-                </option>
-              ))}
-          </NativeSelect>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <InputLabel id="product-label" sx={{ color: 'white' }}>
+        Products
+      </InputLabel>
+
+      <Select
+        labelId="product-label"
+        value={selectedProductID}
+        onChange={onCollectionChanged}
+        sx={{ color: 'white' }}
+        fullWidth
+      >
+       
+        {_productsData &&
+          _productsData.map(({ id, title  }) => (
+            <MenuItem key={id} value={id}>
+              {title} 
+            </MenuItem>
+          ))}
+      </Select>
+     
     </Box>
   )
 }

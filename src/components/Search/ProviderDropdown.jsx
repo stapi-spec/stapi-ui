@@ -30,6 +30,7 @@ const ProviderDropdown= () => {
         value={selectedProvider}
         onChange={handleChange}
         sx={{ color: 'white' }}
+        fullWidth
       >
         <MenuItem value={'eusi'}>EUSI</MenuItem>
         <MenuItem value={'umbra'}>Umbra</MenuItem>
