@@ -35,7 +35,6 @@ function App() {
     if (_appConfig) {
       InitializeAppFromConfig()
       GetCollectionsService()
-      GetProductsService()
     }
   }, [_appConfig])
 

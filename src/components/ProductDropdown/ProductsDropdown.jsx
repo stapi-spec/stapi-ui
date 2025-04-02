@@ -6,11 +6,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedProductData
 } from '../../redux/slices/mainSlice'
+import { GetProductsService } from '../../services/get-products-service'
 
 const Dropdown = () => {
-  const _selectedProductData = useSelector(
-    (state) => state.mainSlice.selectedProductData
-  )
+    const _apiKey = useSelector((state) => state.mainSlice.apiKey)
+    const _selectedProvider = useSelector(
+      (state) => state.mainSlice.selectedProvider
+    )
+  useEffect(() => {
+    console.log(_selectedProvider, _apiKey)
+    if (_selectedProvider && _selectedProvider){
+          console.log(_selectedProvider, _apiKey)
+          GetProductsService(_selectedProvider, _apiKey)
+
+
+    }
+  }, [_selectedProvider, _apiKey])
+    
+    const _selectedProductData = useSelector(
+      (state) => state.mainSlice.selectedProductData
+    )
 
   const dispatch = useDispatch()
   const [selectedProductID, setSelectedProductId] = useState(_selectedProductData)

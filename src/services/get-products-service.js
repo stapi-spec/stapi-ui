@@ -1,7 +1,7 @@
 import { setProductsData } from "../redux/slices/mainSlice"
 import { store } from '../redux/store'
 
-export async function GetProductsService() {
+export async function GetProductsService(provider, apikey) {
     // const allProductRequests = ALL_PROVIDERS.map(async provider => {
     //     return fetch('/api/products', {
     //         headers: new Headers({
@@ -448,7 +448,7 @@ export async function GetProductsService() {
             }
         }
     ]
-    let umbraProducts = [
+    const umbraProducts = [
         {
             "type": "Product",
             "conformsTo": [
@@ -615,7 +615,7 @@ export async function GetProductsService() {
 
     // TODO: PUT ENDPOINT HERE
     const endpoint = '/landsat/products'
-    await fetch(
+    /* await fetch(
         endpoint,
     {
         method: 'GET'
@@ -625,6 +625,21 @@ export async function GetProductsService() {
         console.log(data)
         umbraProducts = data.products
         store.dispatch(setProductsData([...eusiProducts, ...umbraProducts, ...planetProducts]))
-    });
+    }); */
+    switch (provider) {
+      case 'eusi':
+        store.dispatch(setProductsData(eusiProducts))
+        return
+      case 'umbra':
+        store.dispatch(setProductsData(umbraProducts))
+        return
+      case 'planet':
+        store.dispatch(setProductsData(planetProducts))
+        return
+      default:
+        console.error('Unsupported provider', provider)
+    }
+         
+
 
 }
