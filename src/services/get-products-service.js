@@ -2,28 +2,12 @@ import { setProductsData } from '../redux/slices/mainSlice'
 import { store } from '../redux/store'
 
 export async function GetProductsService(provider, apikey) {
-  // const allProductRequests = ALL_PROVIDERS.map(async provider => {
-  //     return fetch('/api/products', {
-  //         headers: new Headers({
-  //             'Backend': provider.id,
-  //             'Authorization': `Bearer ${userToken}`
-  //         })
-  //     })
-  //         .then(async res => await res.json())
-  //         .then(data => { return { 'provider': provider.id, 'data': data } })
-  // });
-
-  // Promise.all(allProductRequests).then((results) => {
-  //     store.dispatch(setProductsData(Object.fromEntries(Object.values(results).map(value => {
-  //         return value.data.products
-  //     }))))
-  // }).catch(e => setError(e));
 
   const PROVIDERS = [
     { id: 'eusi', url: 'https://apps.euspaceimaging.com/test/internal/stapi' }
   ]
 
-  const allProductRequests = PROVIDERS_URLS.map(async (providerData) => {
+  const allProductRequests = PROVIDERS.map(async (providerData) => {
     // Get all products meta data
     const productMetaResponse = await fetch(providerData.url + '/products', {
       method: 'GET'
@@ -55,33 +39,10 @@ export async function GetProductsService(provider, apikey) {
   })
 
   const results = await Promise.all(allProductRequests)
+  console.log('products', results[0].productList)
+  store.dispatch(setProductsData(results[0].productList))
 
-  // for (const url of baseurls) {
-  //   // Get all products meta data
-  //   const productMetaResponse = await fetch(url, { method: 'GET' }).then(
-  //     (res) => res.json()
-  //   )
-
-  //   // Get all constraints
-  //   for (const product of productMetaResponse) {
-  //     const constraints = await fetch(url + `/${product.id}/constraints`).then(
-  //       (res) => res.json()
-  //     )
-
-  //     const productParameters = await fetch(
-  //       url + `/${product.id}/product-parameters`
-  //     ).then((res) => res.json())
-
-  //     productList.push({
-  //       ...product,
-  //       constraints,
-  //       productParameters
-  //     })
-  //   }
-  // }
-  console.log('products', results)
-
-  const mockProducts = [
+ /* const mockProducts = [
     {
       type: 'Product',
       conformsTo: ['https://geojson.org/schema/Polygon.json'],
@@ -261,8 +222,8 @@ export async function GetProductsService(provider, apikey) {
   //     }
   // //   }
   // //   const EUSI_PRODUCTS = [EUSI_MAXAR_OPTICAL_PRODUCT]
-
-  switch (provider) {
+*/
+  /* switch (provider) {
     case 'eusi':
       store.dispatch(setProductsData(eusiProducts))
       return
@@ -274,7 +235,6 @@ export async function GetProductsService(provider, apikey) {
       return
     default:
       console.error('Unsupported provider', provider)
-  }
+  } */
 
-  // store.dispatch(setProductsData(mockProducts))
 }

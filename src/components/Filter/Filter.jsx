@@ -78,12 +78,12 @@ const Filter = () => {
 
   const filterContainer = []
 
-  if (_selectedProductData?.queryables?.properties == null) return null
+  if (_selectedProductData?.constraints?.properties == null) return null
   for (const constraintName of Object.keys(
-    _selectedProductData.queryables.properties
+    _selectedProductData.constraints.properties
   )) {
     const constraint =
-      _selectedProductData.queryables.properties[constraintName]
+      _selectedProductData.constraints.properties[constraintName]
     if (constraint.type === 'integer') {
       filterContainer.push(
         <FormControl key={constraintName} sx={{ marginTop: 4 }}>
@@ -108,7 +108,7 @@ const Filter = () => {
                 })
               )
             }}
-            required={_selectedProductData.queryables.required.includes(
+            required={_selectedProductData.constraints.required.includes(
               constraintName
             )}
           />
@@ -165,7 +165,7 @@ const Filter = () => {
             id={constraintName}
             name={constraintName}
             aria-describedby={constraintName}
-            required={_selectedProductData.queryables.required.includes(constraintName)}
+            required={_selectedProductData.constraints.required.includes(constraintName)}
             onChange={(event, newValue) => {
               store.dispatch(
                 setSelectedProductFilters({
