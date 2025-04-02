@@ -28,6 +28,7 @@ const APIKey = () => {
         sx={{ input: { color: 'white' } }}
         onChange={handleChange}
         value={apiKey}
+        fullWidth
       />
     </Box>
   )
