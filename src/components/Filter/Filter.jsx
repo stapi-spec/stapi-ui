@@ -1,5 +1,7 @@
 import React from 'react'
 import {
+  Chip,
+  Divider,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -9,7 +11,8 @@ import {
   Select,
   Slider,
   Stack,
-  Switch
+  Switch,
+  Typography
 } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
@@ -18,6 +21,7 @@ import { setSelectedProductFilters } from '../../redux/slices/mainSlice'
 import { store } from '../../redux/store'
 import { newSearch } from '../../utils/searchHelper'
 import './Filter.css'
+import { Box } from '@mui/system'
 
 const Filter = () => {
   // State that should contain the selected filters
@@ -86,33 +90,49 @@ const Filter = () => {
     const constraint =
       _selectedProductData.constraints.properties[constraintName]
     if (constraint.type === 'integer') {
+      const marks = [
+        {
+          value: constraint.minimum,
+          label: constraint.minimum
+        },
+        {
+          value: constraint.maximum,
+          label: constraint.minimum
+        }
+      ]
+
       filterContainer.push(
         <FormControl key={constraintName} sx={{ marginTop: 4 }}>
-          <InputLabel
-            htmlFor={constraintName}
-            sx={{ color: '#FFF', paddingTop: 2 }}
-          >
-            {constraint.title}
-          </InputLabel>
-          <Slider
-            id={constraintName}
-            name={constraintName}
-            valueLabelDisplay="on"
-            min={constraint.minimum}
-            max={constraint.maximum}
-            value={_selectedProductFilters[constraintName] || 0}
-            onChange={(event, newValue) => {
-              store.dispatch(
-                setSelectedProductFilters({
-                  ..._selectedProductFilters,
-                  [constraintName]: newValue
-                })
-              )
-            }}
-            required={_selectedProductData.constraints.required.includes(
-              constraintName
-            )}
+          <FormControlLabel
+            control={
+              <Slider
+                id={constraintName}
+                name={constraintName}
+                valueLabelDisplay="auto"
+                min={constraint.minimum}
+                max={constraint.maximum}
+                value={_selectedProductFilters[constraintName] || 0}
+                onChange={(event, newValue) => {
+                  store.dispatch(
+                    setSelectedProductFilters({
+                      ..._selectedProductFilters,
+                      [constraintName]: newValue
+                    })
+                  )
+                }}
+                required={_selectedProductData.constraints.required.includes(
+                  constraintName
+                )}
+              />
+            }
+            label={constraint.title}
+            labelPlacement="top"
           />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant="body2">{constraint.minimum}</Typography>
+            <Typography variant="body2">{constraint.maximum}</Typography>
+           
+          </Box>
           <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
             {constraint.description}
           </FormHelperText>
@@ -130,6 +150,28 @@ const Filter = () => {
           >
             {constraint.title}
           </InputLabel>
+          <FormControlLabel
+            control={
+              <Switch
+                id={constraintName}
+                name={constraintName}
+                aria-describedby={constraintName}
+                checked={
+                  _selectedProductFilters[constraintName] || constraint.default
+                }
+                onChange={(event) => {
+                  store.dispatch(
+                    setSelectedProductFilters({
+                      ..._selectedProductFilters,
+                      [constraintName]: event.target.checked
+                    })
+                  )
+                }}
+              />
+            }
+            label={constraint.title}
+            labelPlacement="top"
+          />
           <Slider
             id={constraintName}
             name={constraintName}
@@ -156,28 +198,29 @@ const Filter = () => {
     if (constraint.type === 'string') {
       filterContainer.push(
         <FormControl key={constraintName}>
-          <InputLabel
-            htmlFor={constraintName}
-            sx={{ color: '#FFF', paddingTop: 0 }}
-          >
-            {constraint.title}
-          </InputLabel>
-          <Input
-            id={constraintName}
-            name={constraintName}
-            aria-describedby={constraintName}
-            required={_selectedProductData.constraints.required.includes(
-              constraintName
-            )}
-            onChange={(event, newValue) => {
-              store.dispatch(
-                setSelectedProductFilters({
-                  ..._selectedProductFilters,
-                  [constraintName]: event.target.value
-                })
-              )
-            }}
+          <FormControlLabel
+            control={
+              <Input
+                id={constraintName}
+                name={constraintName}
+                aria-describedby={constraintName}
+                required={_selectedProductData.constraints.required.includes(
+                  constraintName
+                )}
+                onChange={(event, newValue) => {
+                  store.dispatch(
+                    setSelectedProductFilters({
+                      ..._selectedProductFilters,
+                      [constraintName]: event.target.value
+                    })
+                  )
+                }}
+              />
+            }
+            label={constraint.title}
+            labelPlacement="top"
           />
+
           <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
       )
@@ -230,29 +273,31 @@ const Filter = () => {
 
       filterContainer.push(
         <FormControl key={constraintName}>
-          <InputLabel
-            htmlFor={constraintName}
-            sx={{ color: '#FFF', paddingTop: 0 }}
-          >
-            {constraint.title}
-          </InputLabel>
-          <Select
-            id={constraintName}
-            name={constraintName}
-            required={_selectedProductData.constraints.required.includes(
-              constraintName
-            )}
-            onChange={(event) => {
-              store.dispatch(
-                setSelectedProductFilters({
-                  ..._selectedProductFilters,
-                  [constraintName]: event.target.value
-                })
-              )
-            }}
-          >
-            {options}
-          </Select>
+          <FormControlLabel
+            control={
+              <Select
+                id={constraintName}
+                name={constraintName}
+                required={_selectedProductData.constraints.required.includes(
+                  constraintName
+                )}
+                fullWidth
+                onChange={(event) => {
+                  store.dispatch(
+                    setSelectedProductFilters({
+                      ..._selectedProductFilters,
+                      [constraintName]: event.target.value
+                    })
+                  )
+                }}
+              >
+                {options}
+              </Select>
+            }
+            label={constraint.title}
+            labelPlacement="top"
+          />
+
           <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
       )
@@ -270,17 +315,23 @@ const Filter = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ padding: '15px' }} data-testid="Search">
-        <form onSubmit={processSearchBtn}>
+      <form onSubmit={processSearchBtn}>
+        <Divider sx={{ background: 'white'}}>
+          <Chip
+            label="Constraints"
+            size="small"
+            sx={{ backgroundColor: 'white' }}
+          />
+        </Divider>
+        <div style={{ padding: '15px' }} data-testid="Search">
           <Stack gap={4}>{filterContainer}</Stack>
-
-          <div className="" style={{ marginTop: 24 }}>
-            <button className={`actionButton searchButton`} type="submit">
-              Find Opportunities
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className="" style={{ marginTop: 24 }}>
+          <button className={`actionButton searchButton`} type="submit">
+            Find Opportunities
+          </button>
+        </div>
+      </form>
     </ThemeProvider>
   )
 }
