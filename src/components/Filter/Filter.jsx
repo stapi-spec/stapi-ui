@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   FormControl,
+  FormControlLabel,
   FormHelperText,
   Input,
   InputLabel,
@@ -165,13 +166,17 @@ const Filter = () => {
             id={constraintName}
             name={constraintName}
             aria-describedby={constraintName}
-            required={_selectedProductData.constraints.required.includes(constraintName)}
+            required={_selectedProductData.constraints.required.includes(
+              constraintName
+            )}
             onChange={(event, newValue) => {
               store.dispatch(
                 setSelectedProductFilters({
                   ..._selectedProductFilters,
                   [constraintName]: event.target.value
-                }))}}
+                })
+              )
+            }}
           />
           <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
@@ -183,17 +188,29 @@ const Filter = () => {
       console.log(constraint)
       filterContainer.push(
         <FormControl key={constraintName}>
-          <InputLabel
-            htmlFor={constraintName}
-            sx={{ color: '#FFF', paddingTop: 0 }}
-          >
-            {constraint.title}
-          </InputLabel>
-          <Switch
-            id={constraintName}
-            name={constraintName}
-            aria-describedby={constraintName}
+          <FormControlLabel
+            control={
+              <Switch
+                id={constraintName}
+                name={constraintName}
+                aria-describedby={constraintName}
+                checked={
+                  _selectedProductFilters[constraintName] || constraint.default
+                }
+                onChange={(event) => {
+                  store.dispatch(
+                    setSelectedProductFilters({
+                      ..._selectedProductFilters,
+                      [constraintName]: event.target.checked
+                    })
+                  )
+                }}
+              />
+            }
+            label={constraint.title}
+            labelPlacement="top"
           />
+
           <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
       )
@@ -201,20 +218,9 @@ const Filter = () => {
     }
 
     if (constraint.type === 'array') {
-      // TODO for umbras case we need to add a check for the $ref property, if it exists we need to get the enum values from the $ref object
-      // and populate the dropdown with those values
-      // otherwise just take the enum values from the parameter properties
-      // its not working for the last umbra json but maybe after the changes it will?
-
-      let refItem = {}
-      if (constraint.items.$ref) {
-        const refName = constraint.items.$ref.split('/').pop()
-        refItem = _selectedProductData.parameters.$defs[refName]
-      }
-
       const options = []
 
-      for (const option of refItem?.enum || []) {
+      for (const option of constraint?.items?.enum || []) {
         options.push(
           <MenuItem key={option} value={option}>
             {option}
@@ -230,7 +236,21 @@ const Filter = () => {
           >
             {constraint.title}
           </InputLabel>
-          <Select id={constraintName} name={constraintName}>
+          <Select
+            id={constraintName}
+            name={constraintName}
+            required={_selectedProductData.constraints.required.includes(
+              constraintName
+            )}
+            onChange={(event) => {
+              store.dispatch(
+                setSelectedProductFilters({
+                  ..._selectedProductFilters,
+                  [constraintName]: event.target.value
+                })
+              )
+            }}
+          >
             {options}
           </Select>
           <FormHelperText>{constraint.description}</FormHelperText>
