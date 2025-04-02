@@ -49,6 +49,8 @@ const initialState = {
   autoCenterOnItemChanged: false,
   hasLeftPanelTabChanged: false,
   selectedProductFilters: [],
+  selectedProvider:null,
+  apiKey:null
 }
 
 // next, for every key in the initialState
@@ -191,6 +193,12 @@ export const mainSlice = createSlice({
     },
     setSelectedProductFilters: (state, action) => {
       state.selectedProductFilters = action.payload
+    },
+    setSelectedProvider: (state, action) => {
+      state.selectedProvider = action.payload
+    },
+    setApiKey: (state, action) => {
+      state.apiKey = action.payload
     }
   }
 })
@@ -242,5 +250,7 @@ export const { sethasLeftPanelTabChanged } = mainSlice.actions
 export const { setProductsData } = mainSlice.actions
 export const { setSelectedProductData } = mainSlice.actions
 export const { setSelectedProductFilters } = mainSlice.actions
+export const { setSelectedProvider} = mainSlice.actions
+export const { setApiKey } = mainSlice.actions
 
 export default mainSlice.reducer

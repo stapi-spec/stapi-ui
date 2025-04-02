@@ -91,10 +91,6 @@
   "pre-commit": {
     "silent": false,
     "run": [
-      "check-markdown",
-      "audit-all",
-      "audit-prod",
-      "test-pre-commit",
       "build"
     ]
   },

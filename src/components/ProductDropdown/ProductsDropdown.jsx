@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import './ProductsDropdown.css'
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
 import NativeSelect from '@mui/material/NativeSelect'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -18,7 +17,6 @@ const Dropdown = () => {
   const _productsData = useSelector(
     (state) => state.mainSlice.productsData
   )
-  const _appConfig = useSelector((state) => state.mainSlice.appConfig)
 
 
   useEffect(() => {
@@ -43,10 +41,8 @@ const Dropdown = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{display: 'flex', flexDirection:'column'}}>
       <label htmlFor="productsDropdown">Products</label>
-      <Grid container alignItems="center">
-        <Grid item xs>
           <NativeSelect
             id="productsDropdown"
             value={selectedProductID}
@@ -63,8 +59,6 @@ const Dropdown = () => {
                 </option>
               ))}
           </NativeSelect>
-        </Grid>
-      </Grid>
     </Box>
   )
 }
