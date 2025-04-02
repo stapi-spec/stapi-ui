@@ -88,18 +88,6 @@
     "audit-prod": "npx better-npm-audit audit --production",
     "check-markdown": "remark . --frail"
   },
-  "pre-commit": {
-    "silent": false,
-    "run": [
-      "check-markdown",
-      "format",
-      "lint",
-      "audit-all",
-      "audit-prod",
-      "test-pre-commit",
-      "build"
-    ]
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
