@@ -11,7 +11,7 @@ import {
   Switch
 } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import {  useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import 'react-tooltip/dist/react-tooltip.css'
 import { setSelectedProductFilters } from '../../redux/slices/mainSlice'
 import { store } from '../../redux/store'
@@ -19,7 +19,6 @@ import { newSearch } from '../../utils/searchHelper'
 import './Filter.css'
 
 const Filter = () => {
-
   // State that should contain the selected filters
   const _selectedProductFilters = useSelector(
     (state) => state.mainSlice.selectedProductFilters
@@ -27,7 +26,6 @@ const Filter = () => {
   const _selectedProductData = useSelector(
     (state) => state.mainSlice.selectedProductData
   )
-
 
   const theme = createTheme({
     components: {
@@ -79,13 +77,15 @@ const Filter = () => {
   })
 
   const filterContainer = []
-  if (_selectedProductData?.constraints?.properties) {
+  console.log(_selectedProductData)
+
+  if (_selectedProductData?.queryables?.properties) {
     for (const constraintName of Object.keys(
-      _selectedProductData.constraints.properties
+      _selectedProductData.queryables.properties
     )) {
       const constraint =
-        _selectedProductData.constraints.properties[constraintName]
-
+        _selectedProductData.queryables.properties[constraintName]
+      console.log(constraint)
       if (constraint.type === 'integer') {
         filterContainer.push(
           <FormControl key={constraintName} sx={{ marginTop: 4 }}>
