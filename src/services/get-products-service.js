@@ -2,16 +2,16 @@ import { setProductsData } from '../redux/slices/mainSlice'
 import { store } from '../redux/store'
 
 export async function GetProductsService(provider, apikey) {
-    // const allProductRequests = ALL_PROVIDERS.map(async provider => {
-    //     return fetch('/api/products', {
-    //         headers: new Headers({
-    //             'Backend': provider.id,
-    //             'Authorization': `Bearer ${userToken}`
-    //         })
-    //     })
-    //         .then(async res => await res.json())
-    //         .then(data => { return { 'provider': provider.id, 'data': data } })
-    // });
+  // const allProductRequests = ALL_PROVIDERS.map(async provider => {
+  //     return fetch('/api/products', {
+  //         headers: new Headers({
+  //             'Backend': provider.id,
+  //             'Authorization': `Bearer ${userToken}`
+  //         })
+  //     })
+  //         .then(async res => await res.json())
+  //         .then(data => { return { 'provider': provider.id, 'data': data } })
+  // });
 
   // Promise.all(allProductRequests).then((results) => {
   //     store.dispatch(setProductsData(Object.fromEntries(Object.values(results).map(value => {
@@ -19,14 +19,12 @@ export async function GetProductsService(provider, apikey) {
   //     }))))
   // }).catch(e => setError(e));
 
-    /* .then(async res => await res.json())
+  /* .then(async res => await res.json())
     .then((data) => {
         console.log(data)
         umbraProducts = data.products
         store.dispatch(setProductsData([...eusiProducts, ...umbraProducts, ...planetProducts]))
     }); */
-
-
 
   const planetProducts = [
     {
@@ -368,21 +366,11 @@ export async function GetProductsService(provider, apikey) {
       }
     }
   ]
-  // TODO: PUT ENDPOINT HERE
-//   const endpoint = '/landsat/products'
-//   const eusiProducts = await fetch(endpoint, {
-//     method: 'GET'
-//   })
-//     .then(async (res) => await res.json())
-//     .then((data) => {
-//       console.log(data)
-//       umbraProducts = data.products
-//     })
 
   const eusiProducts = [
     {
       type: 'Product',
-      conformsTo: [],
+      conformsTo: ['https://geojson.org/schema/Polygon.json'],
       id: 'maxar',
       title: 'Maxar Optical',
       description: 'Optical Imagary from the Maxar constellation',
@@ -491,89 +479,89 @@ export async function GetProductsService(provider, apikey) {
     }
   ]
 
-// //   const EUSI_MAXAR_OPTICAL_PRODUCT = {
-//     type: 'Product',
-//     stat_version: '0.0.1',
-//     stat_extensions: [],
-//     id: 'maxar_opt',
-//     title: 'Maxar tasking',
-//     description: '',
-//     keywords: ['EO', 'OPTICAL', 'WV01', 'WV02', 'WV03', 'GE01', 'VHR'],
-//     license: 'proprietary',
-//     providers: [
-//       {
-//         name: 'EUSI',
-//         description: null,
-//         roles: ['licensor', 'processor', 'producer', 'host'],
-//         url: 'https://www.euspaceimaging.com'
-//       }
-//     ],
-//     links: [],
-//     constraints: {
-//       additionalProperties: true,
-//       properties: {
-//         offNadirAngle: {
-//           title: 'Offnadirangle',
-//           type: 'integer'
-//         },
-//         sensor: {
-//           title: 'Sensor',
-//           type: 'string'
-//         }
-//       },
-//       required: ['offNadirAngle', 'sensor'],
-//       title: 'MaxarConstraints',
-//       type: 'object'
-//     },
-//     parameters: {
-//       additionalProperties: false,
-//       properties: {
-//         customerReference: {
-//           default: '',
-//           description:
-//             'Free text parameter containing the client reference to the tasking order',
-//           title: 'Customer Reference',
-//           type: 'string'
-//         },
-//         opportunityRequestId: {
-//           description:
-//             'ID returned from an opportunity request. Must be included to place order.',
-//           title: 'Opportunity Request Id',
-//           type: 'string'
-//         },
-//         endUserIds: {
-//           description:
-//             'Parameter containing a list of EUSI assigned UUID for the end users',
-//           title: 'EUSI Enduser ID',
-//           type: 'string'
-//         },
-//         endUseCode: {
-//           description:
-//             'Parameter containing the end use code describing usage of the imagery',
-//           title: 'EUSI Enduse Code',
-//           type: 'string'
-//         }
-//       },
-//       required: ['opportunityRequestId', 'endUserIds', 'endUseCode'],
-//       title: 'MaxarOrderParameters',
-//       type: 'object'
-//     }
-// //   }
-// //   const EUSI_PRODUCTS = [EUSI_MAXAR_OPTICAL_PRODUCT]
+  // //   const EUSI_MAXAR_OPTICAL_PRODUCT = {
+  //     type: 'Product',
+  //     stat_version: '0.0.1',
+  //     stat_extensions: [],
+  //     id: 'maxar_opt',
+  //     title: 'Maxar tasking',
+  //     description: '',
+  //     keywords: ['EO', 'OPTICAL', 'WV01', 'WV02', 'WV03', 'GE01', 'VHR'],
+  //     license: 'proprietary',
+  //     providers: [
+  //       {
+  //         name: 'EUSI',
+  //         description: null,
+  //         roles: ['licensor', 'processor', 'producer', 'host'],
+  //         url: 'https://www.euspaceimaging.com'
+  //       }
+  //     ],
+  //     links: [],
+  //     constraints: {
+  //       additionalProperties: true,
+  //       properties: {
+  //         offNadirAngle: {
+  //           title: 'Offnadirangle',
+  //           type: 'integer'
+  //         },
+  //         sensor: {
+  //           title: 'Sensor',
+  //           type: 'string'
+  //         }
+  //       },
+  //       required: ['offNadirAngle', 'sensor'],
+  //       title: 'MaxarConstraints',
+  //       type: 'object'
+  //     },
+  //     parameters: {
+  //       additionalProperties: false,
+  //       properties: {
+  //         customerReference: {
+  //           default: '',
+  //           description:
+  //             'Free text parameter containing the client reference to the tasking order',
+  //           title: 'Customer Reference',
+  //           type: 'string'
+  //         },
+  //         opportunityRequestId: {
+  //           description:
+  //             'ID returned from an opportunity request. Must be included to place order.',
+  //           title: 'Opportunity Request Id',
+  //           type: 'string'
+  //         },
+  //         endUserIds: {
+  //           description:
+  //             'Parameter containing a list of EUSI assigned UUID for the end users',
+  //           title: 'EUSI Enduser ID',
+  //           type: 'string'
+  //         },
+  //         endUseCode: {
+  //           description:
+  //             'Parameter containing the end use code describing usage of the imagery',
+  //           title: 'EUSI Enduse Code',
+  //           type: 'string'
+  //         }
+  //       },
+  //       required: ['opportunityRequestId', 'endUserIds', 'endUseCode'],
+  //       title: 'MaxarOrderParameters',
+  //       type: 'object'
+  //     }
+  // //   }
+  // //   const EUSI_PRODUCTS = [EUSI_MAXAR_OPTICAL_PRODUCT]
 
-    switch (provider) {
-      case 'eusi':
-        store.dispatch(setProductsData(eusiProducts))
-        return
-      case 'umbra':
-        store.dispatch(setProductsData(umbraProducts))
-        return
-      case 'planet':
-        store.dispatch(setProductsData(planetProducts))
-        return
-      default:
-        console.error('Unsupported provider', provider)
-    }
-         
+  switch (provider) {
+    case 'eusi':
+      store.dispatch(setProductsData(eusiProducts))
+      return
+    case 'umbra':
+      store.dispatch(setProductsData(umbraProducts))
+      return
+    case 'planet':
+      store.dispatch(setProductsData(planetProducts))
+      return
+    default:
+      console.error('Unsupported provider', provider)
+  }
+
   // store.dispatch(setProductsData(mockProducts))
 }
