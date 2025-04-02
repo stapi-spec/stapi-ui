@@ -79,8 +79,11 @@ const Filter = () => {
   const filterContainer = []
 
   if (_selectedProductData?.queryables?.properties == null) return null
-  for (const constraintName of Object.keys( _selectedProductData.queryables.properties)) {
-    const constraint = _selectedProductData.queryables.properties[constraintName]
+  for (const constraintName of Object.keys(
+    _selectedProductData.queryables.properties
+  )) {
+    const constraint =
+      _selectedProductData.queryables.properties[constraintName]
     if (constraint.type === 'integer') {
       filterContainer.push(
         <FormControl key={constraintName} sx={{ marginTop: 4 }}>
@@ -105,6 +108,9 @@ const Filter = () => {
                 })
               )
             }}
+            required={_selectedProductData.queryables.required.includes(
+              constraintName
+            )}
           />
           <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
             {constraint.description}
@@ -159,6 +165,13 @@ const Filter = () => {
             id={constraintName}
             name={constraintName}
             aria-describedby={constraintName}
+            required={_selectedProductData.queryables.required.includes(constraintName)}
+            onChange={(event, newValue) => {
+              store.dispatch(
+                setSelectedProductFilters({
+                  ..._selectedProductFilters,
+                  [constraintName]: event.target.value
+                }))}}
           />
           <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
@@ -229,21 +242,6 @@ const Filter = () => {
 
   function processSearchBtn(formEvent) {
     formEvent.preventDefault()
-    /*
-    const keys = Object.keys(formEvent.target).slice(0, -2)
-    let res = {}
-    console.log(_selectedProductFilters)
-
-    for (const key of keys) {
-      if (formEvent.target[key].value) {
-            console.log(formEvent.formEvent.target[key])
-
-        res = {
-          ...res,
-          [formEvent.target[key].name]: formEvent.target[key].value
-        }
-      }
-    } */
 
     console.log('Parameters: ', _selectedProductFilters)
     newSearch(_selectedProductFilters)
@@ -258,7 +256,7 @@ const Filter = () => {
 
           <div className="" style={{ marginTop: 24 }}>
             <button className={`actionButton searchButton`} type="submit">
-              Search
+              Find Opportunities
             </button>
           </div>
         </form>
