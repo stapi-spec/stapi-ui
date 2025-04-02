@@ -10,7 +10,7 @@ import {
   Stack
 } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import 'react-tooltip/dist/react-tooltip.css'
 import { setSelectedProductFilters } from '../../redux/slices/mainSlice'
 import { store } from '../../redux/store'
@@ -18,10 +18,6 @@ import { newSearch } from '../../utils/searchHelper'
 import './Filter.css'
 
 const Filter = () => {
-  const dispatch = useDispatch()
-  const _selectedCollectionData = useSelector(
-    (state) => state.mainSlice.selectedCollectionData
-  )
 
   // State that should contain the selected filters
   const _selectedProductFilters = useSelector(
@@ -31,12 +27,6 @@ const Filter = () => {
     (state) => state.mainSlice.selectedProductData
   )
 
-  const _viewMode = useSelector((state) => state.mainSlice.viewMode)
-  const _searchGeojsonBoundary = useSelector(
-    (state) => state.mainSlice.searchGeojsonBoundary
-  )
-  const _appConfig = useSelector((state) => state.mainSlice.appConfig)
-  const mosaicTilerURL = _appConfig.MOSAIC_TILER_URL || ''
 
   const theme = createTheme({
     components: {
