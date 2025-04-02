@@ -52,7 +52,6 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-testing-library": "^6.0.1",
     "jsdom": "^22.0.0",
-    "pre-commit": "^1.2.2",
     "prettier": "^3.0.0",
     "prettier-eslint": "^16.3.0",
     "prettier-eslint-cli": "^7.1.0",
@@ -76,7 +75,6 @@
     "build": "tsc && vite build",
     "serve": "vite preview --outDir build",
     "test": "vitest",
-    "test-pre-commit": "vitest --run",
     "coverage": "vitest run --coverage ",
     "lint": "eslint ./src --ext .js,.ts && echo \"👍  Passed linting check.\n\"",
     "lint-fix": "eslint ./src --ext .js,.ts --fix",
@@ -110,78 +108,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "remarkConfig": {
-    "plugins": [
-      "remark-gfm",
-      "validate-links",
-      "remark-preset-lint-consistent",
-      "remark-preset-lint-markdown-style-guide",
-      "remark-preset-lint-recommended",
-      "lint-no-html",
-      [
-        "remark-lint-emphasis-marker",
-        "*"
-      ],
-      [
-        "remark-lint-no-duplicate-headings",
-        false
-      ],
-      "remark-lint-hard-break-spaces",
-      "remark-lint-blockquote-indentation",
-      "remark-lint-no-consecutive-blank-lines",
-      [
-        "remark-lint-maximum-line-length",
-        150
-      ],
-      [
-        "remark-lint-fenced-code-flag",
-        false
-      ],
-      "remark-lint-fenced-code-marker",
-      "remark-lint-no-shell-dollars",
-      [
-        "remark-lint-code-block-style",
-        "fenced"
-      ],
-      "remark-lint-heading-increment",
-      "remark-lint-no-multiple-toplevel-headings",
-      "remark-lint-no-heading-punctuation",
-      [
-        "remark-lint-maximum-heading-length",
-        70
-      ],
-      [
-        "remark-lint-heading-style",
-        "atx"
-      ],
-      [
-        "remark-lint-no-shortcut-reference-link",
-        false
-      ],
-      "remark-lint-list-item-bullet-indent",
-      "remark-lint-ordered-list-marker-style",
-      "remark-lint-ordered-list-marker-value",
-      "remark-lint-checkbox-character-style",
-      [
-        "remark-lint-unordered-list-marker-style",
-        "-"
-      ],
-      [
-        "remark-lint-list-item-indent",
-        "space"
-      ],
-      "remark-lint-table-pipes",
-      "remark-lint-no-literal-urls",
-      [
-        "remark-lint-no-file-name-irregular-characters",
-        false
-      ],
-      [
-        "remark-lint-list-item-spacing",
-        false
-      ]
     ]
   },
   "jest": {

@@ -25,11 +25,11 @@ export default defineConfig({
     },
     cors: false,
     proxy: {
-      '/landsat': {
-        target: 'https://qju8vxty89.execute-api.us-east-1.amazonaws.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/landsat/, ''),
-      },
+      // '/landsat': {
+      //   target: 'https://qju8vxty89.execute-api.us-east-1.amazonaws.com',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/landsat/, ''),
+      // },
     },
   },
   test: {

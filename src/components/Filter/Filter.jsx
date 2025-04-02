@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   FormControl,
   FormHelperText,
@@ -7,7 +7,8 @@ import {
   MenuItem,
   Select,
   Slider,
-  Stack
+  Stack,
+  Switch
 } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import {  useSelector } from 'react-redux'
@@ -78,12 +79,46 @@ const Filter = () => {
   })
 
   const filterContainer = []
-  if (_selectedProductData?.parameters?.properties) {
+  if (_selectedProductData?.constraints?.properties) {
     for (const constraintName of Object.keys(
-      _selectedProductData.parameters.properties
+      _selectedProductData.constraints.properties
     )) {
       const constraint =
-        _selectedProductData.parameters.properties[constraintName]
+        _selectedProductData.constraints.properties[constraintName]
+
+      if (constraint.type === 'integer') {
+        filterContainer.push(
+          <FormControl key={constraintName} sx={{ marginTop: 4 }}>
+            <InputLabel
+              htmlFor={constraintName}
+              sx={{ color: '#FFF', paddingTop: 2 }}
+            >
+              {constraint.title}
+            </InputLabel>
+            <Slider
+              id={constraintName}
+              name={constraintName}
+              valueLabelDisplay="on"
+              min={constraint.minimum}
+              max={constraint.maximum}
+              value={_selectedProductFilters[constraintName] || 0}
+              onChange={(event, newValue) => {
+                store.dispatch(
+                  setSelectedProductFilters({
+                    ..._selectedProductFilters,
+                    [constraintName]: newValue
+                  })
+                )
+              }}
+            />
+            <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
+              {constraint.description}
+            </FormHelperText>
+          </FormControl>
+        )
+        continue
+      }
+
       if (constraint.type === 'number') {
         filterContainer.push(
           <FormControl key={constraintName} sx={{ marginTop: 4 }}>
@@ -126,6 +161,27 @@ const Filter = () => {
               {constraint.title}
             </InputLabel>
             <Input
+              id={constraintName}
+              name={constraintName}
+              aria-describedby={constraintName}
+            />
+            <FormHelperText>{constraint.description}</FormHelperText>
+          </FormControl>
+        )
+        continue
+      }
+
+      if (constraint.type === 'boolean') {
+        console.log(constraint)
+        filterContainer.push(
+          <FormControl key={constraintName}>
+            <InputLabel
+              htmlFor={constraintName}
+              sx={{ color: '#FFF', paddingTop: 0 }}
+            >
+              {constraint.title}
+            </InputLabel>
+            <Switch
               id={constraintName}
               name={constraintName}
               aria-describedby={constraintName}
@@ -202,7 +258,7 @@ const Filter = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{'padding':'15px'}} data-testid="Search">
+      <div style={{ padding: '15px' }} data-testid="Search">
         <form onSubmit={processSearchBtn}>
           <Stack gap={4}>{filterContainer}</Stack>
 
