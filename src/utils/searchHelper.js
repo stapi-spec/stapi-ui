@@ -30,23 +30,12 @@ export function newSearch(filters, productData) {
   const geometry = store.getState().mainSlice.searchGeojsonBoundary
   const dates = store.getState().mainSlice.searchDateRangeValue
   const productId = store.getState().mainSlice.selectedProductData.id
-  console.log(geometry, dates, filters)
-  console.log(geometry)
+  const apiKey = store.getState().mainSlice.apiKey
+
   const query = {
     //product_id: productId,
-    datetime: "2025-04-21T00:00:00.000Z/2025-04-29T23:59:59.000Z" || `${dates[0]}/${dates[1]}`,
-    geometry: {
-      type: 'Polygon',
-      coordinates: [
-        [
-          [131.4067090823608, -24.863581247683243],
-          [131.4067090823608, -24.946918997631883],
-          [131.51697981183463, -24.946918997631883],
-          [131.51697981183463, -24.863581247683243],
-          [131.4067090823608, -24.863581247683243]
-        ]
-      ]
-    },
+    datetime: `${dates[0]}/${dates[1]}`,
+    geometry: geometry.geometry,
     filter: {
       // op: 'and',
       // args: []
@@ -76,9 +65,8 @@ export function newSearch(filters, productData) {
   //   query.filter.args.push(upperBounds)
   // }
 
-  console.log(query)
 
-  SearchService(query, productData)
+  SearchService(query, productData, apiKey)
 
   // const _selectedCollection = store.getState().mainSlice.selectedCollectionData
 
