@@ -35,48 +35,29 @@ export function newSearch(filters, productData) {
   const query = {
     datetime: `${dates[0]}/${dates[1]}`,
     geometry: geometry.geometry,
-    filter: {
-      op: 'and',
-      args: [
-        {
-          op: '=',
-          args: [
-            {
-              property: 'maxOffNadirAngle'
-            },
-            filters.maxOffNadirAngle
-          ]
-        },
-        {
-          op: 'in',
-          args: [
-            {
-              property: 'sensors'
-            },
-            [filters.sensors]
-          ]
-        },
-        {
-          op: '=',
-          args: [
-            {
-              property: 'maxCloudCover'
-            },
-            filters.maxCloudCover
-          ]
-        },
-        {
-          op: '=',
-          args: [
-            {
-              property: 'productResolution'
-            },
-            filters.productResolution
-          ]
-        }
-      ]
+    filter: {}
+  }
+
+  console.log(filters)
+  if (Object.keys(filters).length > 0) {
+    query.filter.op = 'and'
+    query.filter.args = []
+
+    for (const key in filters) {
+      console.log(key, filters[key])
+      const operator = key === 'sensors' ? 'in' : '='
+      query.filter.args.push({
+        op: operator,
+        args: [
+          {
+            property: key
+          },
+          filters[key]
+        ]
+      })
     }
   }
+  console.log(query)
 
   SearchService(query, productData, apiKey)
 
