@@ -90,17 +90,6 @@ const Filter = () => {
     const constraint =
       _selectedProductData.constraints.properties[constraintName]
     if (constraint.type === 'integer') {
-      const marks = [
-        {
-          value: constraint.minimum,
-          label: constraint.minimum
-        },
-        {
-          value: constraint.maximum,
-          label: constraint.minimum
-        }
-      ]
-
       filterContainer.push(
         <FormControl key={constraintName} sx={{ marginTop: 4 }}>
           <FormControlLabel
@@ -133,9 +122,6 @@ const Filter = () => {
             <Typography variant="body2">{constraint.maximum}</Typography>
            
           </Box>
-          <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
-            {constraint.description}
-          </FormHelperText>
         </FormControl>
       )
       continue
@@ -188,9 +174,6 @@ const Filter = () => {
               )
             }}
           />
-          <FormHelperText sx={{ color: '#FFF', paddingTop: 3.5 }}>
-            {constraint.description}
-          </FormHelperText>
         </FormControl>
       )
       continue
@@ -220,8 +203,6 @@ const Filter = () => {
             label={constraint.title}
             labelPlacement="top"
           />
-
-          <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
       )
       continue
@@ -253,8 +234,6 @@ const Filter = () => {
             label={constraint.title}
             labelPlacement="top"
           />
-
-          <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
       )
       continue
@@ -297,8 +276,6 @@ const Filter = () => {
             label={constraint.title}
             labelPlacement="top"
           />
-
-          <FormHelperText>{constraint.description}</FormHelperText>
         </FormControl>
       )
       continue
@@ -323,7 +300,7 @@ const Filter = () => {
           />
         </Divider>
         <div style={{ padding: '15px' }} data-testid="Search">
-          <Stack gap={4}>{filterContainer}</Stack>
+          <Stack gap={1}>{filterContainer}</Stack>
         </div>
         <div className="" style={{ marginTop: 24 }}>
           <button className={`actionButton searchButton`} type="submit">
