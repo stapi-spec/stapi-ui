@@ -192,20 +192,8 @@
   border-radius: 7px;
 }
 
-.opportunity-card p {
-  font-size: 14px;
-}
 
 .opportunity-card:hover{
   background-color: #4a5164;
   cursor: pointer;
-}
-
-.opportunity-card span{
-  color: aqua;
-}
-
-.opportunity-details p{
-  font-size: 14px;
-
 }

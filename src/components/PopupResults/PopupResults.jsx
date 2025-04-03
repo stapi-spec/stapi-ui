@@ -53,60 +53,33 @@ const PopupResults = (props) => {
                     onClick={() => handleCardClick(feature.links[0])}
                     key={inx}
                   >
-                    <div>
-                      <p>
-                        ID: <span>{feature.id}</span>
-                      </p>
-                     
+                    <Box display="flex" flexDirection="column">
+                      <Typography variant="caption">
+                        ID: {feature.id}
+                      </Typography>
+
                       {Object.keys(feature.properties).map((key) => {
                         if (key === 'datetime') {
                           const dateArray = feature.properties[key].split('/')
                           return (
                             <>
-                              <Box
-                                key={key}
-                                display="flex"
-                                flexDirection="row"
-                                alignItems="center"
-                                gap={2}
-                              >
-                                <p>Start:</p>
-                                <Typography variant="caption">
-                                  {dateArray[0]}
-                                </Typography>
-                              </Box>
+                              <Typography variant="caption">
+                                Start: {dateArray[0]}
+                              </Typography>
 
-                              <Box
-                                key={key}
-                                display="flex"
-                                flexDirection="row"
-                                alignItems="center"
-                                gap={2}
-                              >
-                                <p>End:</p>
-                                <Typography variant="caption">
-                                  {dateArray[1]}
-                                </Typography>
-                              </Box>
+                              <Typography variant="caption">
+                                End: {dateArray[1]}
+                              </Typography>
                             </>
                           )
                         }
                         return (
-                          <Box
-                            key={key}
-                            display="flex"
-                            flexDirection="row"
-                            alignItems="center"
-                            gap={2}
-                          >
-                            <p>{key}:</p>
-                            <Typography variant="caption">
-                              {feature.properties[key]}
-                            </Typography>
-                          </Box>
+                          <Typography variant="caption" key={key}>
+                            {key}: {feature.properties[key]}
+                          </Typography>
                         )
                       })}
-                    </div>
+                    </Box>
                   </div>
                 )
               })}
