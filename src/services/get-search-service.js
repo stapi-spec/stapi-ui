@@ -77,8 +77,8 @@ export async function SearchService(searchParams, productData, apiKey) {
   */
 
   /// ///////
-  console.log('REQUEST', searchParams)
-  await fetch(productData.providerBaseUrl + '/products/maxar/opportunities', {
+  console.log('REQUEST', searchParams, productData)
+  await fetch(productData.providerBaseUrl + `/products/${productData.id}/opportunities`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
