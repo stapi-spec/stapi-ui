@@ -10,6 +10,7 @@ import {
 import { addDataToLayer, footprintLayerStyle } from '../utils/mapHelper'
 
 export async function SearchService(searchParams, productData, apiKey) {
+  /*
  const opportunities = [{
    id: 'cc4a6b70-d45b-415b-b7ea-0f636fdc9a2d',
    product_id: 'maxar',
@@ -43,6 +44,7 @@ export async function SearchService(searchParams, productData, apiKey) {
      }
    ]
  }]
+   
  console.log(opportunities[0].opportunity_request)
  const featureHack = {
    type: 'FeatureCollection',
@@ -72,6 +74,7 @@ export async function SearchService(searchParams, productData, apiKey) {
   store.dispatch(sethasLeftPanelTabChanged(true))
 
   return
+  */
 
   /// ///////
   console.log('REQUEST', searchParams)
@@ -94,16 +97,34 @@ export async function SearchService(searchParams, productData, apiKey) {
       console.log('RESPONSE', json)
 
       const opportunities = json.response()
-      store.dispatch(setSearchResults(opportunities))
-      // store.dispatch(setmappedScenes(fakeOpportunities.features))
+      const featureHack = {
+        type: 'FeatureCollection',
+        features: []
+      }
+      for (const [key, value] of Object.entries(opportunities)) {
+        featureHack.features.push({
+          type: 'Feature',
+          properties: { id: value.id },
+          geometry: value.opportunity_request.geometry
+        })
+      }
+
+      console.log(featureHack)
+
+      store.dispatch(setSearchResults(featureHack))
+      store.dispatch(setmappedScenes(featureHack))
       const options = {
         style: footprintLayerStyle
       }
       store.dispatch(setSearchLoading(false))
-      addDataToLayer(opportunities, 'searchResultsLayer', options, true)
+
+      addDataToLayer(featureHack, 'searchResultsLayer', options, true)
       // store.dispatch(setClickResults(fakeOpportunities.features))
       store.dispatch(settabSelected('details'))
       store.dispatch(sethasLeftPanelTabChanged(true))
+
+      
+     
     })
     .catch((error) => {
       store.dispatch(setSearchLoading(false))
