@@ -1,15 +1,23 @@
 import { setProductsData } from '../redux/slices/mainSlice'
 import { store } from '../redux/store'
 
+  const PROVIDER_URLS = 
+    { 'eusi' : 'https://apps.euspaceimaging.com/test/internal/stapi' }
+
 export async function GetProductsService(provider, apikey) {
 
-  const PROVIDERS = [
-    { id: 'eusi', url: 'https://apps.euspaceimaging.com/test/internal/stapi' }
-  ]
+  if (!(provider in PROVIDER_URLS)){
+    console.error('Unsupported provider URL', provider)
+    setProductsData(null)
+    return
+  }
 
-  const allProductRequests = PROVIDERS.map(async (providerData) => {
+  const baseUrl = PROVIDER_URLS[provider]
+
+  
+
     // Get all products meta data
-    const productMetaResponse = await fetch(providerData.url + '/products', {
+    const productMetaResponse = await fetch(baseUrl + '/products', {
       method: 'GET'
     }).then((res) => res.json())
     const productList = []
@@ -17,14 +25,14 @@ export async function GetProductsService(provider, apikey) {
     // Get all constraints
     for (const product of productMetaResponse.products) {
       const constraints = await fetch(
-        providerData.url + `/products/${product.id}/constraints`,
+        baseUrl + `/products/${product.id}/constraints`,
         {
           method: 'GET'
         }
       ).then((res) => res.json())
 
       const orderParameters = await fetch(
-        providerData.url + `/products/${product.id}/order-parameters`,
+        baseUrl + `/products/${product.id}/order-parameters`,
         { method: 'GET' }
       ).then((res) => res.json())
 
@@ -35,12 +43,10 @@ export async function GetProductsService(provider, apikey) {
       })
     }
 
-    return { id: providerData.id, productList }
-  })
+    // return { id: providerData.id, productList }
 
-  const results = await Promise.all(allProductRequests)
-  console.log('products', results[0].productList)
-  store.dispatch(setProductsData(results[0].productList))
+  console.log('products', productList)
+  store.dispatch(setProductsData(productList))
 
  /* const mockProducts = [
     {
