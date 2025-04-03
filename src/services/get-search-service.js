@@ -104,12 +104,16 @@ export async function SearchService(searchParams, productData) {
   //         "href": "stat-api.example.com?page=2"
   //     }
   // };
-
+  console.log('REQUEST', searchParams)
   // TODO: PUT ENDPOINT HERE
   // check for selected product and map endpoint
   await fetch(productData.providerBaseUrl + '/products/maxar/opportunities', {
     method: 'POST',
-    body: {} // TODO
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: '*/*'
+    },
+    body: JSON.stringify(searchParams)
   })
     .then((response) => {
       if (response.ok) {
