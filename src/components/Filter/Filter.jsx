@@ -109,9 +109,9 @@ const Filter = () => {
                     })
                   )
                 }}
-                required={_selectedProductData.constraints.required.includes(
+                required={_selectedProductData.constraints?.required?.includes(
                   constraintName
-                )}
+                ) ?? []}
               />
             }
             label={constraint.title}
@@ -187,9 +187,9 @@ const Filter = () => {
                 id={constraintName}
                 name={constraintName}
                 aria-describedby={constraintName}
-                required={_selectedProductData.constraints.required.includes(
+                required={_selectedProductData.constraints.required?.includes(
                   constraintName
-                )}
+                ) ?? []}
                 onChange={(event, newValue) => {
                   store.dispatch(
                     setSelectedProductFilters({
@@ -257,9 +257,9 @@ const Filter = () => {
               <Select
                 id={constraintName}
                 name={constraintName}
-                required={_selectedProductData.constraints.required.includes(
+                required={_selectedProductData.constraints.required?.includes(
                   constraintName
-                )}
+                ) || []}
                 fullWidth
                 onChange={(event) => {
                   store.dispatch(

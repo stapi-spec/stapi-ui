@@ -11,8 +11,8 @@ export async function GetProductsService(provider, apikey) {
     const productMetaResponse = await fetch(providerData.url + '/products', {
       method: 'GET'
     }).then((res) => res.json())
-    const productList = []
 
+    const productList = []
     // Get all constraints
     for (const product of productMetaResponse.products) {
       const constraints = await fetch(
@@ -40,7 +40,7 @@ export async function GetProductsService(provider, apikey) {
   })
 
   const results = await Promise.all(allProductRequests)
-  console.log('products', results[0].productList)
+  console.log('products', results[0])
   store.dispatch(setProductsData(results[0].productList))
 
   /* const mockProducts = [
