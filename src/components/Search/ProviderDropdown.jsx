@@ -33,7 +33,7 @@ const ProviderDropdown= () => {
         fullWidth
       >
         <MenuItem value={'eusi'}>EUSI</MenuItem>
-        <MenuItem value={'umbra'}>Umbra</MenuItem>
+        <MenuItem value={'opencosmos'}>Open Cosmos</MenuItem>
         <MenuItem value={'planet'}>Planet</MenuItem>
       </Select>
     </Box>

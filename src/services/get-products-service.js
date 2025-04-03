@@ -1,8 +1,10 @@
 import { setProductsData } from '../redux/slices/mainSlice'
 import { store } from '../redux/store'
 
-  const PROVIDER_URLS = 
-    { 'eusi' : 'https://apps.euspaceimaging.com/test/internal/stapi' }
+  const PROVIDER_URLS = {
+    eusi: 'https://apps.euspaceimaging.com/test/internal/stapi',
+    opencosmos: 'http://localhost:8000'
+  }
 
 export async function GetProductsService(provider, apikey) {
 
