@@ -37,7 +37,7 @@ const PopupResults = (props) => {
           <div>
             {_searchResults.features.map((feature) => {
               return <div className="opportunity-card" onClick={() => handleCardClick(feature.properties.product_id)}><div>
-                <p>Product ID: <span>{feature.properties.product_id}</span></p>
+                <p>Product ID: <span>{feature.properties.id}</span></p>
                 <p>Start time: <span>{feature.properties.start_datetime}</span></p>
                 <p>End time: <span>{feature.properties.end_datetime}</span></p>
               </div></div>
