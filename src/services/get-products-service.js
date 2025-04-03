@@ -22,8 +22,8 @@ export async function GetProductsService(provider, apikey) {
     const productMetaResponse = await fetch(baseUrl + '/products', {
       method: 'GET'
     }).then((res) => res.json())
-    const productList = []
 
+    const productList = []
     // Get all constraints
     for (const product of productMetaResponse.products) {
       const constraints = await fetch(
@@ -40,8 +40,10 @@ export async function GetProductsService(provider, apikey) {
 
       productList.push({
         ...product,
+        conformsTo: ['https://geojson.org/schema/Polygon.json'],
         constraints,
-        orderParameters
+        orderParameters,
+        providerBaseUrl:baseUrl 
       })
     }
 
@@ -50,7 +52,7 @@ export async function GetProductsService(provider, apikey) {
   console.log('products', productList)
   store.dispatch(setProductsData(productList))
 
- /* const mockProducts = [
+  /* const mockProducts = [
     {
       type: 'Product',
       conformsTo: ['https://geojson.org/schema/Polygon.json'],
@@ -244,5 +246,4 @@ export async function GetProductsService(provider, apikey) {
     default:
       console.error('Unsupported provider', provider)
   } */
-
 }

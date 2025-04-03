@@ -26,48 +26,59 @@ import * as h3 from 'h3-js'
 import debounce from './debounce'
 import { AddMosaicService } from '../services/post-mosaic-service'
 
-export function newSearch(filters) {
+export function newSearch(filters, productData) {
   const geometry = store.getState().mainSlice.searchGeojsonBoundary
   const dates = store.getState().mainSlice.searchDateRangeValue
   const productId = store.getState().mainSlice.selectedProductData.id
-  console.log(geometry, dates, filters)
+  const apiKey = store.getState().mainSlice.apiKey
 
   const query = {
-    product_id: productId,
     datetime: `${dates[0]}/${dates[1]}`,
     geometry: geometry.geometry,
     filter: {
       op: 'and',
-      args: []
+      args: [
+        {
+          op: '=',
+          args: [
+            {
+              property: 'maxOffNadirAngle'
+            },
+            filters.maxOffNadirAngle
+          ]
+        },
+        {
+          op: 'in',
+          args: [
+            {
+              property: 'sensors'
+            },
+            [filters.sensors]
+          ]
+        },
+        {
+          op: '=',
+          args: [
+            {
+              property: 'maxCloudCover'
+            },
+            filters.maxCloudCover
+          ]
+        },
+        {
+          op: '=',
+          args: [
+            {
+              property: 'productResolution'
+            },
+            filters.productResolution
+          ]
+        }
+      ]
     }
   }
 
-  for (const [key, value] of Object.entries(filters)) {
-    const lowerBounds = {
-      op: '>=',
-      args: [
-        {
-          property: key
-        },
-        value[0]
-      ]
-    }
-    query.filter.args.push(lowerBounds)
-    const upperBounds = {
-      op: '<=',
-      args: [
-        {
-          property: key
-        },
-        value[1]
-      ]
-    }
-    query.filter.args.push(upperBounds)
-  }
-
-  console.log(query)
-
-  SearchService(query)
+  SearchService(query, productData, apiKey)
 
   // const _selectedCollection = store.getState().mainSlice.selectedCollectionData
 
