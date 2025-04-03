@@ -128,7 +128,7 @@ const DateTimeRangeSelector = () => {
                 ? startDate.setHours(0, 0, 0)
                 : new Date(startDate)
             }
-            maxDate={endDate}
+            minDate={new Date()}
             showPopperArrow={false}
             todayButton="Today"
             showIcon
@@ -154,8 +154,7 @@ const DateTimeRangeSelector = () => {
                 ? endDate.setHours(23, 59, 59)
                 : new Date(endDate)
             }
-            minDate={startDate}
-            maxDate={new Date()}
+            minDate={new Date()}
             showPopperArrow={false}
             todayButton="Today"
             showIcon

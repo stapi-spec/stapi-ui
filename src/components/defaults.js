@@ -10,4 +10,5 @@ export const DEFAULT_MAP_CENTER = [30, 0]
 export const DEFAULT_MAP_ZOOM = 3
 // sets default date range (current minus 24hrs * 60min * 60sec * 1000ms per day * 14 days)
 const twoWeeksFuture = new Date(Date.now() + 24 * 60 * 60 * 1000 * 14)
-export const DEFAULT_DATE_RANGE = [ new Date(), twoWeeksFuture]
+const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
+export const DEFAULT_DATE_RANGE = [tomorrow, twoWeeksFuture]
