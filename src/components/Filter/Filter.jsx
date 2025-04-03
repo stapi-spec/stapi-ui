@@ -89,7 +89,7 @@ const Filter = () => {
   )) {
     const constraint =
       _selectedProductData.constraints.properties[constraintName]
-    if (constraint.type === 'integer') {
+    if (constraint.type === 'integer' || constraint.type === 'number') {
       filterContainer.push(
         <FormControl key={constraintName} sx={{ marginTop: 4 }}>
           <FormControlLabel
@@ -127,57 +127,6 @@ const Filter = () => {
       continue
     }
 
-    if (constraint.type === 'number') {
-      filterContainer.push(
-        <FormControl key={constraintName} sx={{ marginTop: 4 }}>
-          <InputLabel
-            htmlFor={constraintName}
-            sx={{ color: '#FFF', paddingTop: 2 }}
-          >
-            {constraint.title}
-          </InputLabel>
-          <FormControlLabel
-            control={
-              <Switch
-                id={constraintName}
-                name={constraintName}
-                aria-describedby={constraintName}
-                checked={
-                  _selectedProductFilters[constraintName] || constraint.default
-                }
-                onChange={(event) => {
-                  store.dispatch(
-                    setSelectedProductFilters({
-                      ..._selectedProductFilters,
-                      [constraintName]: event.target.checked
-                    })
-                  )
-                }}
-              />
-            }
-            label={constraint.title}
-            labelPlacement="top"
-          />
-          <Slider
-            id={constraintName}
-            name={constraintName}
-            valueLabelDisplay="on"
-            min={constraint.minimum}
-            max={constraint.maximum}
-            value={_selectedProductFilters[constraintName] || [0, 0]} // TODO: this should be managed by redux, but it's not working right now :) (the other controls should also be added on redux)
-            onChange={(event, newValue) => {
-              store.dispatch(
-                setSelectedProductFilters({
-                  ..._selectedProductFilters,
-                  [constraintName]: newValue
-                })
-              )
-            }}
-          />
-        </FormControl>
-      )
-      continue
-    }
     if (constraint.type === 'string') {
       filterContainer.push(
         <FormControl key={constraintName}>
