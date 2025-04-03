@@ -33,38 +33,50 @@ export function newSearch(filters, productData) {
   const apiKey = store.getState().mainSlice.apiKey
 
   const query = {
-    //product_id: productId,
     datetime: `${dates[0]}/${dates[1]}`,
     geometry: geometry.geometry,
     filter: {
-      // op: 'and',
-      // args: []
+      op: 'and',
+      args: [
+        {
+          op: '=',
+          args: [
+            {
+              property: 'maxOffNadirAngle'
+            },
+            filters.maxOffNadirAngle
+          ]
+        },
+        {
+          op: 'in',
+          args: [
+            {
+              property: 'sensors'
+            },
+            [filters.sensors]
+          ]
+        },
+        {
+          op: '=',
+          args: [
+            {
+              property: 'maxCloudCover'
+            },
+            filters.maxCloudCover
+          ]
+        },
+        {
+          op: '=',
+          args: [
+            {
+              property: 'productResolution'
+            },
+            filters.productResolution
+          ]
+        }
+      ]
     }
   }
-
-  // for (const [key, value] of Object.entries(filters)) {
-  //   const lowerBounds = {
-  //     op: '>=',
-  //     args: [
-  //       {
-  //         property: key
-  //       },
-  //       value[0]
-  //     ]
-  //   }
-  //   query.filter.args.push(lowerBounds)
-  //   const upperBounds = {
-  //     op: '<=',
-  //     args: [
-  //       {
-  //         property: key
-  //       },
-  //       value[1]
-  //     ]
-  //   }
-  //   query.filter.args.push(upperBounds)
-  // }
-
 
   SearchService(query, productData, apiKey)
 
