@@ -38,23 +38,33 @@ export function newSearch(filters, productData) {
     filter: {}
   }
 
-  console.log(filters)
   if (Object.keys(filters).length > 0) {
     query.filter.op = 'and'
     query.filter.args = []
 
     for (const key in filters) {
       console.log(key, filters[key])
-      const operator = key === 'sensors' ? 'in' : '='
-      query.filter.args.push({
-        op: operator,
-        args: [
-          {
-            property: key
-          },
-          filters[key]
-        ]
-      })
+      if (productData.constraints.properties[key].type === 'array') {
+        query.filter.args.push({
+          op: 'in',
+          args: [
+            {
+              property: key
+            },
+            [filters[key]]
+          ]
+        })
+      } else {
+        query.filter.args.push({
+          op: '=',
+          args: [
+            {
+              property: key
+            },
+            filters[key]
+          ]
+        })
+      }
     }
   }
   console.log(query)
