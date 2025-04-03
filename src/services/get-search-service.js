@@ -96,7 +96,7 @@ export async function SearchService(searchParams, productData, apiKey) {
     .then((json) => {
       console.log('RESPONSE', json)
 
-      const opportunities = json.response()
+      const opportunities = [json]
       const featureHack = {
         type: 'FeatureCollection',
         features: []
