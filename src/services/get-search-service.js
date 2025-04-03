@@ -78,15 +78,18 @@ export async function SearchService(searchParams, productData, apiKey) {
 
   /// ///////
   console.log('REQUEST', searchParams, productData)
-  await fetch(productData.providerBaseUrl + `/products/${productData.id}/opportunities`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: '*/*',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify(searchParams)
-  })
+  await fetch(
+    productData.providerBaseUrl + `/products/${productData.id}/opportunities`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+        Authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify(searchParams)
+    }
+  )
     .then((response) => {
       if (response.ok) {
         return response.json()
@@ -95,36 +98,36 @@ export async function SearchService(searchParams, productData, apiKey) {
     })
     .then((json) => {
       console.log('RESPONSE', json)
-
-      const opportunities = [json]
-      const featureHack = {
-        type: 'FeatureCollection',
-        features: []
+      let opportunities
+      if (json?.type !== 'FeatureCollection') {
+        const opportunities = {
+          type: 'FeatureCollection',
+          features: []
+        }
+        for (const [key, value] of Object.entries([json])) {
+          opportunities.features.push({
+            type: 'Feature',
+            properties: { id: value.id },
+            geometry: value.opportunity_request.geometry
+          })
+        }
+      } else {
+        opportunities = json
       }
-      for (const [key, value] of Object.entries(opportunities)) {
-        featureHack.features.push({
-          type: 'Feature',
-          properties: { id: value.id },
-          geometry: value.opportunity_request.geometry
-        })
-      }
 
-      console.log(featureHack)
+      console.log(opportunities)
 
-      store.dispatch(setSearchResults(featureHack))
-      store.dispatch(setmappedScenes(featureHack))
+      store.dispatch(setSearchResults(opportunities))
+      store.dispatch(setmappedScenes(opportunities))
       const options = {
         style: footprintLayerStyle
       }
       store.dispatch(setSearchLoading(false))
 
-      addDataToLayer(featureHack, 'searchResultsLayer', options, true)
+      addDataToLayer(opportunities, 'searchResultsLayer', options, true)
       // store.dispatch(setClickResults(fakeOpportunities.features))
       store.dispatch(settabSelected('details'))
       store.dispatch(sethasLeftPanelTabChanged(true))
-
-      
-     
     })
     .catch((error) => {
       store.dispatch(setSearchLoading(false))

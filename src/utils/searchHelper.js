@@ -56,7 +56,7 @@ export function newSearch(filters, productData) {
         })
       } else {
         query.filter.args.push({
-          op: '=',
+          op: '>',
           args: [
             {
               property: key
