@@ -2,7 +2,6 @@ import { setProductsData } from '../redux/slices/mainSlice'
 import { store } from '../redux/store'
 
 export async function GetProductsService(provider, apikey) {
-
   const PROVIDERS = [
     { id: 'eusi', url: 'https://apps.euspaceimaging.com/test/internal/stapi' }
   ]
@@ -30,19 +29,21 @@ export async function GetProductsService(provider, apikey) {
 
       productList.push({
         ...product,
+        conformsTo: ['https://geojson.org/schema/Polygon.json'],
         constraints,
-        orderParameters
+        orderParameters,
+        providerBaseUrl: providerData.url
       })
     }
 
-    return { id: providerData.id, productList }
+    return { id: providerData, productList }
   })
 
   const results = await Promise.all(allProductRequests)
   console.log('products', results[0].productList)
   store.dispatch(setProductsData(results[0].productList))
 
- /* const mockProducts = [
+  /* const mockProducts = [
     {
       type: 'Product',
       conformsTo: ['https://geojson.org/schema/Polygon.json'],
@@ -236,5 +237,4 @@ export async function GetProductsService(provider, apikey) {
     default:
       console.error('Unsupported provider', provider)
   } */
-
 }
