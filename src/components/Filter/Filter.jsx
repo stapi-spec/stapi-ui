@@ -262,9 +262,8 @@ const Filter = () => {
 
   function processSearchBtn(formEvent) {
     formEvent.preventDefault()
-
     console.log('Parameters: ', _selectedProductFilters)
-    newSearch(_selectedProductFilters)
+    newSearch(_selectedProductFilters, _selectedProductData)
     // dispatch(setshowSearchByGeom(false))
   }
 

@@ -9,111 +9,108 @@ import {
 } from '../redux/slices/mainSlice'
 import { addDataToLayer, footprintLayerStyle } from '../utils/mapHelper'
 
-export async function SearchService(searchParams, typeOfSearch) {
-//   const fakeOpportunities = {
-//     "type": "FeatureCollection",
-//     "features": [
-//         {
-//             "type": "Feature",
-//             "geometry": {
-//                 "type": "Point",
-//                 "coordinates": [
-//                     0,
-//                     0
-//                 ]
-//             },
-//             "properties": {
-//                 "start_datetime": "2023-03-01T13:00:00Z",
-//                 "end_datetime": "2023-03-2T15:30:00Z",
-//                 "product_id": "EO",
-//                 "constraints": {
-//                     "gsd": [
-//                         1.0,
-//                         10.0
-//                     ],
-//                     "view:off_nadir": [
-//                         0,
-//                         30
-//                     ],
-//                     "sat_elevation": [
-//                         60,
-//                         90
-//                     ],
-//                     "view:sun_elevation": [
-//                         10,
-//                         90
-//                     ],
-//                     "sat_azimuth": [
-//                         0,
-//                         360
-//                     ],
-//                     "view:sun_azimuth": [
-//                         0,
-//                         360
-//                     ]
-//                 }
-//             }
-//         },
-//         {
-//             "type": "Feature",
-//             "geometry": {
-//                 "type": "Point",
-//                 "coordinates": [
-//                     0,
-//                     0
-//                 ]
-//             },
-//             "properties": {
-//                 "start_datetime": "2023-03-02T13:00:00Z",
-//                 "end_datetime": "2023-03-03T15:30:00Z",
-//                 "product_id": "EO",
-//                 "constraints": {
-//                     "gsd": [
-//                         1.0,
-//                         10.0
-//                     ],
-//                     "view:off_nadir": [
-//                         0,
-//                         30
-//                     ],
-//                     "sat_elevation": [
-//                         60,
-//                         90
-//                     ],
-//                     "view:sun_elevation": [
-//                         10,
-//                         90
-//                     ],
-//                     "sat_azimuth": [
-//                         0,
-//                         360
-//                     ],
-//                     "view:sun_azimuth": [
-//                         0,
-//                         360
-//                     ]
-//                 }
-//             }
-//         }
-//     ],
-//     "links": {
-//         "rel": "next",
-//         "title": "Next page of Opportunities",
-//         "method": "GET",
-//         "type": "application/geo+json",
-//         "href": "stat-api.example.com?page=2"
-//     }
-// };
+export async function SearchService(searchParams, productData) {
+  //   const fakeOpportunities = {
+  //     "type": "FeatureCollection",
+  //     "features": [
+  //         {
+  //             "type": "Feature",
+  //             "geometry": {
+  //                 "type": "Point",
+  //                 "coordinates": [
+  //                     0,
+  //                     0
+  //                 ]
+  //             },
+  //             "properties": {
+  //                 "start_datetime": "2023-03-01T13:00:00Z",
+  //                 "end_datetime": "2023-03-2T15:30:00Z",
+  //                 "product_id": "EO",
+  //                 "constraints": {
+  //                     "gsd": [
+  //                         1.0,
+  //                         10.0
+  //                     ],
+  //                     "view:off_nadir": [
+  //                         0,
+  //                         30
+  //                     ],
+  //                     "sat_elevation": [
+  //                         60,
+  //                         90
+  //                     ],
+  //                     "view:sun_elevation": [
+  //                         10,
+  //                         90
+  //                     ],
+  //                     "sat_azimuth": [
+  //                         0,
+  //                         360
+  //                     ],
+  //                     "view:sun_azimuth": [
+  //                         0,
+  //                         360
+  //                     ]
+  //                 }
+  //             }
+  //         },
+  //         {
+  //             "type": "Feature",
+  //             "geometry": {
+  //                 "type": "Point",
+  //                 "coordinates": [
+  //                     0,
+  //                     0
+  //                 ]
+  //             },
+  //             "properties": {
+  //                 "start_datetime": "2023-03-02T13:00:00Z",
+  //                 "end_datetime": "2023-03-03T15:30:00Z",
+  //                 "product_id": "EO",
+  //                 "constraints": {
+  //                     "gsd": [
+  //                         1.0,
+  //                         10.0
+  //                     ],
+  //                     "view:off_nadir": [
+  //                         0,
+  //                         30
+  //                     ],
+  //                     "sat_elevation": [
+  //                         60,
+  //                         90
+  //                     ],
+  //                     "view:sun_elevation": [
+  //                         10,
+  //                         90
+  //                     ],
+  //                     "sat_azimuth": [
+  //                         0,
+  //                         360
+  //                     ],
+  //                     "view:sun_azimuth": [
+  //                         0,
+  //                         360
+  //                     ]
+  //                 }
+  //             }
+  //         }
+  //     ],
+  //     "links": {
+  //         "rel": "next",
+  //         "title": "Next page of Opportunities",
+  //         "method": "GET",
+  //         "type": "application/geo+json",
+  //         "href": "stat-api.example.com?page=2"
+  //     }
+  // };
 
-// TODO: PUT ENDPOINT HERE
-// check for selected product and map endpoint
-const endpoint = '/landsat/opportunities'
-  await fetch(
-    endpoint,
-    {
-      method: 'GET'
-    }
-  )
+  // TODO: PUT ENDPOINT HERE
+  // check for selected product and map endpoint
+  await fetch(productData.providerBaseUrl + '/products/maxar/opportunities', {
+    method: 'POST',
+    body: {} // TODO
+  })
     .then((response) => {
       if (response.ok) {
         return response.json()
@@ -121,6 +118,8 @@ const endpoint = '/landsat/opportunities'
       throw new Error()
     })
     .then((json) => {
+      console.log('RESPONSE', json)
+
       const opportunities = json.response()
       store.dispatch(setSearchResults(opportunities))
       // store.dispatch(setmappedScenes(fakeOpportunities.features))

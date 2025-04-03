@@ -26,7 +26,7 @@ import * as h3 from 'h3-js'
 import debounce from './debounce'
 import { AddMosaicService } from '../services/post-mosaic-service'
 
-export function newSearch(filters) {
+export function newSearch(filters, productData) {
   const geometry = store.getState().mainSlice.searchGeojsonBoundary
   const dates = store.getState().mainSlice.searchDateRangeValue
   const productId = store.getState().mainSlice.selectedProductData.id
@@ -67,7 +67,7 @@ export function newSearch(filters) {
 
   console.log(query)
 
-  SearchService(query)
+  SearchService(query, productData)
 
   // const _selectedCollection = store.getState().mainSlice.selectedCollectionData
 
