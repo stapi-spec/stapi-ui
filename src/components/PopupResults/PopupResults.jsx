@@ -26,8 +26,8 @@ const PopupResults = (props) => {
   const [featureDetails, setFeatureDetails] = useState();
 
   const handleCardClick = (id) => {
-    setViewState('details');
-    setFeatureDetails(_searchResults.features.find((feature) => feature.properties.product_id === id))
+   // setViewState('details');
+   // setFeatureDetails(_searchResults.features.find((feature) => feature.properties.product_id === id))
   }
 
   return (
