@@ -2,21 +2,24 @@ import { React } from 'react'
 import Box from '@mui/material/Box'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  setSelectedProvider,
+  setSelectedProductData,
+  setSelectedProductFilters,
+  setSelectedProvider
 } from '../../redux/slices/mainSlice'
 
 import { Select, MenuItem, InputLabel } from '@mui/material'
 
-const ProviderDropdown= () => {
+const ProviderDropdown = () => {
   const selectedProvider = useSelector(
     (state) => state.mainSlice.selectedProvider
   )
 
   const dispatch = useDispatch()
 
-
   function handleChange(e) {
     dispatch(setSelectedProvider(e.target.value))
+    dispatch(setSelectedProductData(null))
+    dispatch(setSelectedProductFilters([]))
   }
 
   return (
